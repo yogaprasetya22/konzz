@@ -40,7 +40,7 @@ class RoleSeeder extends Seeder
                 'name_role' => 'perpus',
             ],
             [
-                'name_role' => 'pengembangan-sdm',
+                'name_role' => 'sdm',
             ],
             [
                 'name_role' => 'tik',

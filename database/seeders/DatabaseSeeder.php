@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '1',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
         $pendidikan =  User::create([
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'pendidikan@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '3',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -45,6 +47,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'lse@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '4',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -57,6 +60,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'lppm@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '5',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -69,6 +73,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'bkal@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '6',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -81,6 +86,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'perpus@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '7',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -94,6 +100,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'sdm@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '8',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -106,6 +113,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'tik@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '9',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -118,6 +126,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'pha@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '10',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -130,6 +139,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'kerjasama-humas-internasionalisasi@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '11',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -142,6 +152,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'bem@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '12',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -154,6 +165,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'rektor@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '13',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 
@@ -166,6 +178,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'mahasiswa@gmail.com',
             'password' => bcrypt('asdasdasd'),
             'role_id' => '2',
+            'uuid' => str()->uuid(),
             'created_at' => now(),
         ]);
 

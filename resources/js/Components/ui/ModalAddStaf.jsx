@@ -75,15 +75,7 @@ export default function ModalAddStaf() {
     return (
         <dialog id="my_modal_1" className="modal">
             <div className="modal-box relative overflow">
-                <div className=" absolute top-0 right-0">
-                    <button
-                        onClick={() => window.my_modal_1.close()}
-                        className="p-5 text-xl font-extrabold absolute top-0 right-10 text-white bg-red-500 hover:bg-red-600 transition-all"
-                        aria-label="close modal"
-                    >
-                        x
-                    </button>
-                </div>
+                
                 <div className="w-full">
                     <form onSubmit={submit}>
                         <div className=" pb-4">

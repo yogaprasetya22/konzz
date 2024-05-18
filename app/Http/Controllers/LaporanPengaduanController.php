@@ -43,7 +43,7 @@ class LaporanPengaduanController extends Controller
     {
         $request->validate([
             'deskripsi' => 'required',
-            'bukti' => 'required|max:2048',
+            'bukti' => 'required|file|max:10240',
             'kategori' => 'required',
             'anonim' => 'required',
             'user_id' => 'required',
@@ -76,7 +76,7 @@ class LaporanPengaduanController extends Controller
 
         // Mail::to($laporan_pengaduan->user->email)->send(new MyMail($laporan_pengaduan));
         // buatkan queue untuk pengiriman email
-        
+
 
         return response()->json([
             'message' => 'Laporan Pengaduan berhasil dikirim',

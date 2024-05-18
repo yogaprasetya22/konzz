@@ -66,7 +66,6 @@ class AdvokasiController extends Controller
             $laporanPengaduan->approvalTracker->laporanPengaduan->user->mahasiswa->prodi->name_prodi = 'Anonim';
         }
 
-
         if (
             $laporanPengaduan->status_aproval_id == 1
             && $laporanPengaduan->user->name == $name

@@ -60,6 +60,11 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    // public function konsultasi()
+    // {
+    //     $data 
+    // }
+
     /**
      * Show the form for creating a new resource.
      */

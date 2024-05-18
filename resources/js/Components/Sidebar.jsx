@@ -4,12 +4,15 @@ import React, { useState, useEffect } from "react";
 const Sidebar = ({ isSidebarOpen, menu: MenuDashboard }) => {
     const [activeMenu, setActiveMenu] = useState(null);
 
-    useEffect(() => {
-        const active = MenuDashboard.find((menu) =>
-            window.location.pathname.startsWith(menu.url)
-        );
-        setActiveMenu(active);
-    }, []);
+    const path = window.location.pathname; // Mendapatkan path dari URL
+    let relevantPath; // Variabel untuk menyimpan hasil path yang relevan
+    // Memeriksa apakah ada data di path
+    if (path.includes("/") && path.split("/").length > 2) {
+        const segments = path.split("/"); // Membagi path menjadi segmen menggunakan '/'
+        relevantPath = `/${segments[1]}/${segments[2]}`; // Mengambil dua segmen pertama setelah domain
+    } else {
+        relevantPath = window.location.pathname; // Jika tidak ada data di path, gunakan path utuh
+    }
 
     return (
         <aside

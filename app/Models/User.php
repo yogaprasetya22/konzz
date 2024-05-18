@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id',
+        'name', 'email', 'password', 'role_id', 'uuid',
+        'last_seen_at',
     ];
 
     /**
@@ -39,6 +40,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'last_seen_at' => 'datetime',
     ];
     public function role()
     {
@@ -59,5 +61,34 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $role == $this->role_id;
+    }
+
+    // chat
+    public function searchableAs(): string
+    {
+        return 'users_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            
+        ];
+    }
+
+    public function receiveMessages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Chat::class, 'receiver_id', 'id')->orderByDesc('id');
+    }
+
+    public function sendMessages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Chat::class, 'sender_id', 'id')->orderByDesc('id');
+    }
+
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Chat::class, 'sender_id', 'id');
     }
 }

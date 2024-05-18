@@ -36,7 +36,7 @@ export default function Navbar({ user }) {
 
     return (
         <nav
-            className={`w-full bg-white shadow-sm  lg:px-[10rem] px-0 mt-0 sticky top-0 z-50 transition-all duration-180 ease-in-out `}
+            className={`w-full bg-white shadow-sm  lg:px-[3rem] px-0 mt-0 sticky top-0 z-50 transition-all duration-180 ease-in-out `}
         >
             <div className="navbar">
                 <div className="navbar-start">
@@ -99,29 +99,57 @@ export default function Navbar({ user }) {
                                     )}
                                 </span>
                                 {open && (
-                                    <ul className="p-2 ">
+                                    <ul className="p-2 z-[1200] bg-wgite shadow-lg rounded-lg w-[12rem] ">
                                         <li>
                                             <Link
-                                                href={`/non-akademik`}
-                                                className=" font-medium text-xl p-0 py-1"
+                                                href={`/upload-laporan`}
+                                                className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                    "/upload-laporan" ===
+                                                    window.location.pathname
+                                                        ? "bg-yellow-300 text-white"
+                                                        : "text-gray-700"
+                                                }`}
                                             >
-                                                Non Akademik
+                                                Upload Laporan
                                             </Link>
                                         </li>
                                         <li>
                                             <Link
-                                                href={`/akademik`}
-                                                className=" font-medium text-xl p-0 py-1"
+                                                href={`/history-laporan`}
+                                                className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                    "/history-laporan" ===
+                                                    window.location.pathname
+                                                        ? "bg-yellow-300 text-white"
+                                                        : "text-gray-700"
+                                                }`}
                                             >
-                                                Akademik
+                                                History Laporan
                                             </Link>
                                         </li>
                                         <li>
                                             <Link
-                                                href={`/seksual`}
-                                                className=" font-medium text-xl p-0 py-1"
+                                                href={`/konsultasi`}
+                                                className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                    "/konsultasi" ===
+                                                    window.location.pathname
+                                                        ? "bg-yellow-300 text-white"
+                                                        : "text-gray-700"
+                                                }`}
                                             >
-                                                Seksusal
+                                                Konsultasi
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                href={`/chat`}
+                                                className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                    "/chat" ===
+                                                    window.location.pathname
+                                                        ? "bg-yellow-300 text-white"
+                                                        : "text-gray-700"
+                                                }`}
+                                            >
+                                                Chat
                                             </Link>
                                         </li>
                                     </ul>
@@ -220,19 +248,6 @@ export default function Navbar({ user }) {
                                     </li>
                                     <li>
                                         <Link
-                                            href={`/pusat-informasi`}
-                                            className={`font-medium text-xl px-1 py-2 rounded-sm ${
-                                                "/pusat-informasi" ===
-                                                window.location.pathname
-                                                    ? "bg-yellow-300 text-white"
-                                                    : "text-gray-700"
-                                            }`}
-                                        >
-                                            Pusat Informasi
-                                        </Link>
-                                    </li>{" "}
-                                    <li>
-                                        <Link
                                             href={`/history-laporan`}
                                             className={`font-medium text-xl px-1 py-2 rounded-sm ${
                                                 "/history-laporan" ===
@@ -244,9 +259,48 @@ export default function Navbar({ user }) {
                                             History Laporan
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            href={`/konsultasi`}
+                                            className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                "/konsultasi" ===
+                                                window.location.pathname
+                                                    ? "bg-yellow-300 text-white"
+                                                    : "text-gray-700"
+                                            }`}
+                                        >
+                                            Konsultasi
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href={`/chat`}
+                                            className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                                "/chat" ===
+                                                window.location.pathname
+                                                    ? "bg-yellow-300 text-white"
+                                                    : "text-gray-700"
+                                            }`}
+                                        >
+                                            Chat
+                                        </Link>
+                                    </li>
                                 </ul>
                             </details>
                         </li>
+                        <li>
+                            <Link
+                                href={`/pusat-informasi`}
+                                className={`font-medium text-xl px-1 py-2 rounded-sm ${
+                                    "/pusat-informasi" ===
+                                    window.location.pathname
+                                        ? "bg-yellow-300 text-white"
+                                        : "text-gray-700"
+                                }`}
+                            >
+                                PusInfo
+                            </Link>
+                        </li>{" "}
                         <li>
                             {user ? (
                                 <div className="hidden sm:flex sm:items-center sm:ml-6 p-0">

@@ -69,7 +69,7 @@ Route::prefix('perpus')->middleware(['auth', 'role:7', 'verified'])->group(funct
 });
 
 
-Route::prefix('pengembangan-sdm')->middleware(['auth', 'role:8', 'verified'])->group(function () {
+Route::prefix('sdm')->middleware(['auth', 'role:8', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
@@ -142,6 +142,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'user.last.seen.at'])->group(function () {
+    Route::get('/chat', [\App\Http\Controllers\ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{user:uuid}', [\App\Http\Controllers\ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{user:uuid}', [\App\Http\Controllers\ChatController::class, 'chat'])->name('chat.store');
+
+    Route::delete('/chat/delete/{chat}', [\App\Http\Controllers\ChatController::class, 'destroy'])->name('chat.destroy');
 });
 
 require __DIR__ . '/auth.php';

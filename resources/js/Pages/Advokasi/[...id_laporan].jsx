@@ -3,13 +3,13 @@ import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 import moment from "moment/moment";
 import "moment/locale/id";
+moment.locale("id");
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import { validateStatus } from "@/Components/ui/validateStatus";
-moment.locale("id");
 
 const validateRole = (role) => {
     switch (role) {
@@ -24,15 +24,17 @@ const validateRole = (role) => {
         case 7:
             return "perpus";
         case 8:
-            return "sumberdaya-keuangan";
-        case 9:
             return "sdm";
-        case 10:
+        case 9:
             return "tik";
-        case 11:
+        case 10:
             return "pha";
-        case 12:
+        case 11:
             return "kerjasama-humas-internasionalisasi";
+        case 12:
+            return "bem";
+        case 13:
+            return "rektor";
     }
 };
 

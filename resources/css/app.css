@@ -16,7 +16,7 @@
     }
 
     .overflow_type::-webkit-scrollbar-thumb {
-        background   : #0D7377;
+        background   : #770d65;
         border-radius: 10px;
     }
 }

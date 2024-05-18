@@ -70,45 +70,19 @@ const MenuDashbordValidator = (user) => {
                 return "rektor";
         }
     };
-    // const menu = [
-    //     {
-    //         kat: "DASHBOARD",
-    //         name: "Dashboard",
-    //         url: `/${validateRole(user?.role_id)}`,
-    //         icon: "fas fa-th-large",
-    //     },
-    //     {
-    //         kat: "REGISTY",
-    //         name: "List Laporan ",
-    //         url: `/${validateRole(user?.role_id)}/aproval`,
-    //         icon: "fas fa-clipboard-list",
-    //     },
-    //     {
-    //         kat: "ACCOUNT",
-    //         name: "Manajemen Akun",
-    //         url: `/${validateRole(user?.role_id)}/data`,
-    //         icon: "fas fa-user-check",
-    //     },
-    // ];
     const menu = [
-        // {
-        //     kat: "DASHBOARD",
-        //     name: "Dashboard",
-        //     url: `/${validateRole(user?.role_id)}`,
-        //     icon: "fas fa-th-large",
-        // },
         {
             kat: "REGISTY",
             name: "List Laporan ",
             url: `/${validateRole(user?.role_id)}`,
             icon: "fas fa-clipboard-list",
         },
-        // {
-        //     kat: "ACCOUNT",
-        //     name: "Manajemen Akun",
-        //     url: `/${validateRole(user?.role_id)}/data`,
-        //     icon: "fas fa-user-check",
-        // },
+        {
+            kat: "CHAT",
+            name: "Chat",
+            url: `/chat`,
+            icon: "fas fa-comment-dots",
+        },
     ];
     const menuAdmin = [
         {
@@ -146,6 +120,12 @@ const MenuDashbordValidator = (user) => {
             name: "Manajemen User",
             url: `/${validateRole(user?.role_id)}/data/user`,
             icon: "fas fa-user-check",
+        },
+        {
+            kat: "CHAT",
+            name: "Chat",
+            url: `/chat`,
+            icon: "fas fa-comment-dots",
         },
     ];
     const menuRektor = [
