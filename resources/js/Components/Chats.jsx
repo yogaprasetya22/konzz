@@ -11,12 +11,10 @@ import {
     RadialLinearScale,
     ArcElement,
 } from "chart.js";
-import { Line, PolarArea, Doughnut, Pie } from "react-chartjs-2";
+import ProdiChart from "./ChartUi/ProdiChart";
+import KasusKategoriChart from "./ChartUi/KasusKategoriChart";
 import { useState } from "react";
 import { useEffect } from "react";
-import ProdiChart from "./ChartUi/ProdiChart";
-import TahunChart from "./ChartUi/TahunChart";
-import KasusKategoriChart from "./ChartUi/KasusKategoriChart";
 
 ChartJS.register(
     CategoryScale,
@@ -47,7 +45,6 @@ export default function Chats({ data, user, kategori_laporan }) {
         setDataLaporan(data);
     }, [data]);
 
-    // console.log(dataLaporan);
 
     const filterStatusAprovalPandding = dataLaporan
         ?.map((user) => {

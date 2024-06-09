@@ -90,6 +90,26 @@ const MenuDashbordValidator = (user) => {
     //         icon: "fas fa-user-check",
     //     },
     // ];
+    const menuMahasiswa = [
+        {
+            kat: "DASHBOARD",
+            name: "Dashboard",
+            url: `/visualisasi`,
+            icon: "fas fa-th-large",
+        },
+        {
+            kat: "HOME",
+            name: "Home menu",
+            url: `/${validateRole(user?.role_id)}`,
+            icon: "fas fa-home",
+        },
+        // {
+        //     kat: "ACCOUNT",
+        //     name: "Manajemen Akun",
+        //     url: `/${validateRole(user?.role_id)}/data`,
+        //     icon: "fas fa-user-check",
+        // },
+    ];
     const menu = [
         // {
         //     kat: "DASHBOARD",
@@ -110,6 +130,7 @@ const MenuDashbordValidator = (user) => {
         //     icon: "fas fa-user-check",
         // },
     ];
+
     const menuAdmin = [
         {
             kat: "DASHBOARD",
@@ -161,7 +182,7 @@ const MenuDashbordValidator = (user) => {
         case 1:
             return menuAdmin;
         case 2:
-            return menu;
+            return menuMahasiswa;
         case 3:
             return menu;
         case 4:

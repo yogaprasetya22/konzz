@@ -111,6 +111,8 @@ Route::get('/about', [Controller::class, 'About'])->name('About');
 Route::prefix('/')
     ->middleware(['auth', 'role:2', 'verified'])
     ->group(function () {
+        Route::get('/visualisasi', [MahasiswaController::class, 'Visualisasi'])->name('Visualisasi');
+        Route::get('/rekap', [MahasiswaController::class, 'Rekap'])->name('Rekap');
         Route::get('/upload-laporan', [MahasiswaController::class, 'Laporan'])->name('Laporan');
         Route::get('/pusat-informasi', [MahasiswaController::class, 'Pusinfo'])->name('Pusinfo');
         Route::get('/history-laporan', [MahasiswaController::class, 'History'])->name('History');

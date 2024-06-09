@@ -13,7 +13,7 @@ export default function LayoutUi({ title, user, children }) {
                     <aside>
                         <p>
                             Copyright © {new Date().getFullYear()} - All right
-                            reserved by ACME Industries Ltd
+                            reserved by UPJ
                         </p>
                     </aside>
                 </footer>
