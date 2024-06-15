@@ -1,9 +1,13 @@
-import LayoutUi from "@/Layouts/LayoutUi";
-import { Link } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import InputLabel from "./InputLabel";
+import TextInput from "./TextInput";
+import InputError from "./InputError";
+import { useRef } from "react";
 
-export default function Tracker({ auth, title, data }) {
-    // buatkan validation untuk tracker swicth case berdasarkan status
+export default function LihatKonsultasi({ value }) {
     const validateTracker = (status) => {
         switch (status?.approval_tracker?.status_aproval_id) {
             case 1:
@@ -112,27 +116,43 @@ export default function Tracker({ auth, title, data }) {
     };
 
     return (
-        <LayoutUi title={title} user={auth?.user}>
-            <div className="w-full p-5 md:p-10 flex justify-center ">
-                <div className="px-5 py-5 bg-white rounded-md shadow-md w-full md:w-1/2 flex flex-col gap-5">
-                    <h1 className="text-center font-extrabold text-3xl text-blue-900 ">
-                        TRACKING LAPORAN
-                    </h1>
-                    <hr />
-                    <div className="font-extrabold text-md text-blue-900 flex pt-4  flex-row gap-5">
+        <dialog id="my_modal_3" className="modal">
+            <div className="modal-box w-full max-w-2xl overflow bg-white">
+                <div className=" absolute top-0 right-0">
+                    <button
+                        onClick={() => window.my_modal_3.close()}
+                        className="p-5 text-xl font-extrabold absolute top-0 right-10 text-white bg-red-500 hover:bg-red-600 transition-all"
+                        aria-label="close modal"
+                    >
+                        x
+                    </button>
+                </div>
+                <div className="w-full">
+                    <div className=" pb-4">
+                        <div className="w-full flex justify-center items-center flex-col py-2 gap-4">
+                            <h1 className="font-extrabold text-blue-900 text-2xl">
+                                SIAM
+                            </h1>
+                            <h1 className="font-semibold  text-sm text-blue-900">
+                                Sistem Informasi Advokasi
+                            </h1>
+                        </div>
+                        <hr />
+                    </div>
+                    <div className="items-center font-extrabold text-md text-blue-900 flex pt-4  flex-row gap-16">
                         <p>Kasus:</p>
-                        <p className=" p-2 border text-justify text-gray-600 font-light">
-                            {data?.approval_tracker.laporan_pengaduan.deskripsi}
+                        <p className=" p-2 border text-justify text-gray-600 font-light ">
+                            {value?.topik_konsultasi}
                         </p>
                     </div>
-                    <div className="font-extrabold text-md text-blue-900 flex pt-4">
-                        Penanganan :{" "}
-                        <span className=" pl-2">
-                            "{data?.kategori_laporan.role.name_role}"
-                        </span>
+                    <div className="items-center font-extrabold text-md text-blue-900 flex pt-4 gap-5">
+                        keterangan :{" "}
+                        <p className=" p-2 border text-justify text-gray-600 font-light max-w-[30rem] break-words">
+                            {value?.keterangan}
+                        </p>
                     </div>
                     {/* keterangan warna */}
-                    <div className="flex flex-row gap-4 justify-center">
+                    <div className="flex flex-row gap-4 justify-center pt-5">
                         <div className="flex flex-row items-center gap-2">
                             <div className="w-4 h-4 bg-warning rounded-full"></div>
                             <p>Status</p>
@@ -144,7 +164,7 @@ export default function Tracker({ auth, title, data }) {
                     </div>
                     <div className="m-4 bg-gray-100 flex justify-center rounded-md">
                         <ul className="steps steps-vertical ">
-                            {validateTracker(data).map((item, index) => {
+                            {validateTracker(value).map((item, index) => {
                                 return (
                                     <>
                                         {item.name === "Rejected" ? (
@@ -176,17 +196,8 @@ export default function Tracker({ auth, title, data }) {
                             })}
                         </ul>
                     </div>
-                    {/* button back */}
-                    <div className="w-full flex justify-end">
-                        <Link
-                            href="/history-laporan"
-                            className="p-2 rounded-lg bg-blue-400 text-white font-extrabold"
-                        >
-                            Back
-                        </Link>
-                    </div>
                 </div>
             </div>
-        </LayoutUi>
+        </dialog>
     );
 }

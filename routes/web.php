@@ -25,84 +25,111 @@ use Inertia\Inertia;
 
 Route::prefix('pendidikan')->middleware(['auth', 'role:3', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('lse')->middleware(['auth', 'role:4', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('lppm')->middleware(['auth', 'role:5', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('bkal')->middleware(['auth', 'role:6', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('perpus')->middleware(['auth', 'role:7', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 
 Route::prefix('sdm')->middleware(['auth', 'role:8', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('tik')->middleware(['auth', 'role:9', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('pha')->middleware(['auth', 'role:10', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 Route::prefix('kerjasama-humas-internasionalisasi')->middleware(['auth', 'role:11', 'verified'])->group(function () {
     Route::get('/', [AdvokasiController::class, 'AdvokasiAproval']);
+    Route::get('/konsultasi', [AdvokasiController::class, 'AdvokasiKonsultasiAproval']);
+    Route::get('/konsultasi/{id_laporan}', [AdvokasiController::class, 'AprovalKonsultasi']);
     // Route::get('/data', [AdvokasiController::class, 'AdvokasiDataUser']);
     // Route::get('/aproval', [AdvokasiController::class, 'AdvokasiAproval']);
     Route::get('/aproval/{id_laporan}', [AdvokasiController::class, 'Aproval']);
     Route::post('/user/search', [AdvokasiController::class, 'Advokasisearch']);
     Route::post('/update/status/aproval/{id_laporan}', [AdvokasiController::class, 'updateStatus']);
+    Route::post('/update/status/konsultasi/{id_laporan}', [AdvokasiController::class, 'updateStatusKonsultasi']);
 });
 
 
@@ -117,6 +144,13 @@ Route::prefix('/')
         Route::get('/tracker/{id}', [MahasiswaController::class, 'Tracker'])->name('Tracker');
         Route::get('/lapor/riwayat/{slug}', [Controller::class, 'RiwayatLaporan'])->name('RiwayatLaporan');
         Route::post('/laporan/pengaduan', [LaporanPengaduanController::class, 'store'])->name('store');
+
+        // konsultasi
+        Route::get('/konsultasi', [MahasiswaController::class, 'Konsultasi'])->name('Konsultasi');
+        Route::post('/konsultasi', [MahasiswaController::class, 'KonsultasiStore'])->name('KonsultasiStore');
+        Route::post('/konsultasi/edit', [MahasiswaController::class, 'KonsultasiUpdate'])->name('KonsultasiUpdate');
+        Route::delete('/konsultasi/delete', [MahasiswaController::class, 'KonsultasiDestroy'])->name('KonsultasiDestroy');
+        Route::post('/aproval/konsultasi', [MahasiswaController::class, 'KonsultasiAproval'])->name('KonsultasiAproval');
     });
 
 
@@ -135,8 +169,6 @@ Route::prefix('bem')->middleware(['auth', 'role:12', 'verified'])->group(functio
 Route::prefix('rektor')->middleware(['auth', 'role:13', 'verified'])->group(function () {
     Route::get('/', [DhasboardController::class, 'AdminShow']);
 });
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

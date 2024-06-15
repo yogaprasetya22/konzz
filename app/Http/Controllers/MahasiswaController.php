@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApprovalTracker;
 use App\Models\KategoriLaporan;
+use App\Models\Konsultasi;
 use App\Models\Mahasiswa;
 use App\Models\RelasiLaporanKategori;
 use App\Models\User;
@@ -51,9 +53,7 @@ class MahasiswaController extends Controller
     }
     public function Tracker($id)
     {
-        $RelasiLaporanKategori = RelasiLaporanKategori::with(['kategori_laporan.role', 'approvalTracker.laporanPengaduan.user.mahasiswa.prodi', 'approvalTracker.laporanPengaduan.user.role', 'approvalTracker.statusAproval'])->whereHas('approvalTracker', function ($query) use ($id) {
-            $query->where('id', $id);
-        })->first();
+        $RelasiLaporanKategori = RelasiLaporanKategori::with(['kategori_laporan.role', 'approvalTracker.laporanPengaduan.user.mahasiswa.prodi', 'approvalTracker.laporanPengaduan.user.role', 'approvalTracker.statusAproval'])->where('id', $id)->first();
         return Inertia::render('Home/Tracker', [
             'title' => 'Tracker Laporan',
             'data' => $RelasiLaporanKategori,
@@ -152,5 +152,63 @@ class MahasiswaController extends Controller
         $user = User::find($request->id);
         $user->mahasiswa->delete();
         $user->delete();
+    }
+
+    // konstultasi
+
+    public function Konsultasi()
+    {
+        $user_id = auth()->user()->id;
+        $kategori_laporan = KategoriLaporan::all();
+        $konsultasi = Konsultasi::with(['user', 'approvalTracker.statusAproval'])->where('user_id', $user_id)->latest()->get();
+        return Inertia::render('Home/Konsultasi', [
+            'title' => 'Konsultasi',
+            'data' => $konsultasi,
+            'kategori_laporan' => $kategori_laporan,
+        ]);
+    }
+
+    public function KonsultasiStore(Request $request)
+    {
+        $request->validate([
+            'topik_konsultasi' => ['required', 'string', 'max:255'],
+            'keterangan' => ['required', 'string'],
+            'kategori' => ['required'],
+        ]);
+
+        $konsultasi = Konsultasi::create([
+            'user_id' => auth()->user()->id,
+            'topik_konsultasi' => $request->topik_konsultasi,
+            'keterangan' => $request->keterangan,
+            'kategori_laporan_id' => $request->kategori,
+        ]);
+
+        ApprovalTracker::create([
+            'laporan_pengaduan_id' => $konsultasi->id,
+            'status_aproval_id' => 1,
+        ]);
+
+        return Redirect::route('Konsultasi');
+    }
+
+    public function KonsultasiUpdate(Request $request)
+    {
+        $konsultasi = Konsultasi::find($request->id);
+        $konsultasi->topik_konsultasi = $request->topik_konsultasi;
+        $konsultasi->keterangan = $request->keterangan;
+        $konsultasi->save();
+    }
+
+    public function KonsultasiDestroy(Request $request)
+    {
+        $konsultasi = Konsultasi::find($request->id);
+        $konsultasi->delete();
+    }
+
+    public function KonsultasiAproval(Request $request)
+    {
+        $konsultasi = Konsultasi::find($request->id);
+        $konsultasi->approvalTracker->status_aproval_id = 2;
+        $konsultasi->approvalTracker->save();
     }
 }

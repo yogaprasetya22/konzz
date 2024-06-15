@@ -23,6 +23,6 @@ class LaporanPengaduan extends Model
 
     public function approvalTracker()
     {
-        return $this->hasOne(ApprovalTracker::class);
+        return $this->hasOne(ApprovalTracker::class, 'laporan_pengaduan_id');
     }
 }

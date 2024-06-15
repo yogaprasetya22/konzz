@@ -7,7 +7,6 @@ export default function RightSideBoxChat({ message, isFirstMessage, replyHandleS
 
     return (
         <>
-            {/* Right Side Box Chat */}
             <div className="col-start-6 col-end-13 p-1">
                 <div className="relative flex flex-row-reverse group">
                     <div
@@ -16,7 +15,6 @@ export default function RightSideBoxChat({ message, isFirstMessage, replyHandleS
                             "px-3 py-2 text-xs font-extrabold text-gray-800 bg-indigo-400 rounded-md lg:text-sm"
                         )}
                     >
-                        {/* Replied Chat */}
                         {message.reply && !message.message_deleted_at && (
                             <div className="max-w-full px-2 py-1.5 mb-1.5 bg-gray-700/50 border-gray-600 border-l-4 rounded">
                                 <div className="text-[10px] lg:text-xs font-extrabold">
@@ -62,7 +60,7 @@ export default function RightSideBoxChat({ message, isFirstMessage, replyHandleS
                         {/* Chat Timestamp */}
                         {!message.message_deleted_at && (
                             <div className="flex items-center justify-end mr-2 lg:-mt-2.5 lg:-mr-16">
-                                <div className="text-[9px] lg:text-[10px] text-gray-400/70">
+                                <div className="text-[9px] lg:text-[10px] text-gray-800/70">
                                     {message.sent_at}
                                 </div>
                                 <svg

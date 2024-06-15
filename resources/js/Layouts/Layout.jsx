@@ -78,6 +78,11 @@ const MenuDashbordValidator = (user) => {
             icon: "fas fa-clipboard-list",
         },
         {
+            name: "List Konsultasi",
+            url: `/${validateRole(user?.role_id)}/konsultasi`,
+            icon: "fas fa-clipboard-list",
+        },
+        {
             kat: "CHAT",
             name: "Chat",
             url: `/chat`,

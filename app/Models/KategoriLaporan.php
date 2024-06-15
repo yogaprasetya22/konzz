@@ -16,6 +16,11 @@ class KategoriLaporan extends Model
         return $this->hasOne(LaporanPengaduan::class, 'kategori_laporan_id');
     }
 
+    public function konsultasi()
+    {
+        return $this->hasOne(Konsultasi::class, 'kategori_laporan_id');
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);

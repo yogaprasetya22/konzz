@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('konsultasis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('kategori_laporan_id');
+            $table->string('topik_konsultasi');
+            $table->text('keterangan');
+            $table->foreignId('balasan_id')->nullable();
+            $table->text('balasan')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApprovalTracker;
+use App\Models\Konsultasi;
 use App\Models\LaporanPengaduan;
 use App\Models\RelasiLaporanKategori;
 use App\Models\StatusAproval;
@@ -114,5 +115,54 @@ class AdvokasiController extends Controller
             })->latest()->get();
 
         return response()->json($user);
+    }
+
+
+    public function AdvokasiKonsultasiAproval()
+    {
+        $role_id = auth()->user()->role_id;
+        $user = User::with(['role', 'mahasiswa.prodi'])->latest()->get();
+        $laporanKonsultasi = Konsultasi::with(['kategori_laporan', 'approvalTracker.konsultasi.user.mahasiswa.prodi', 'approvalTracker.konsultasi.user.role', 'approvalTracker.statusAproval'])->whereHas('kategori_laporan', function ($query) use ($role_id) {
+            $query->where('role_id', $role_id);
+        })->latest()->get();
+        return Inertia::render('Advokasi/Konsultasi', [
+            'title' => 'Konsultasi',
+            'data' => $user,
+            'laporan_konsultasi' => $laporanKonsultasi,
+        ]);
+    }
+    public function AprovalKonsultasi($id_laporan)
+    {
+        $laporanKonsultasi = Konsultasi::with(['kategori_laporan', 'approvalTracker.konsultasi.user.mahasiswa.prodi', 'approvalTracker.konsultasi.user.role', 'approvalTracker.statusAproval'])->whereHas('approvalTracker.konsultasi', function ($query) use ($id_laporan) {
+            $query->where('id', $id_laporan);
+        })->first();
+
+        return Inertia::render('Advokasi/[...id_konsultasi]', [
+            'title' => 'Advokasi',
+            'laporan_konsultasi' => $laporanKonsultasi,
+            'status' => StatusAproval::all(),
+        ]);
+    }
+
+    public function updateStatusKonsultasi(Request $request, $id_laporan)
+    {
+        $id_user = $request->id_user;
+        $KonsultasiLaporan = Konsultasi::with(['kategori_laporan', 'approvalTracker.konsultasi.user.mahasiswa.prodi', 'approvalTracker.konsultasi.user.role', 'approvalTracker.statusAproval'])->whereHas('approvalTracker', function ($query) use ($id_laporan) {
+            $query->where('id', $id_laporan);
+        })->first();
+
+        if (
+            $KonsultasiLaporan->approvalTracker->konsultasi->user_id == $id_user
+        ) {
+            $KonsultasiLaporan->approvalTracker->status_aproval_id = (int)$request->status_aproval_id;
+            $KonsultasiLaporan->balasan_id = auth()->user()->id;
+            $KonsultasiLaporan->balasan = $request->balasan;
+            $KonsultasiLaporan->approvalTracker->save();
+        }
+
+        return response()->json([
+            'message' => 'Berhasil mengubah status',
+            'data' => $KonsultasiLaporan,
+        ]);
     }
 }

@@ -74,9 +74,8 @@ export default function ModalAddStaf() {
     }, []);
     return (
         <dialog id="my_modal_1" className="modal">
-            <div className="modal-box relative overflow">
-                
-                <div className="w-full">
+            <div className="modal-box relative overflow ">
+                <div className="w-full ">
                     <form onSubmit={submit}>
                         <div className=" pb-4">
                             <div className="w-full flex justify-center items-center flex-col py-2 gap-4">

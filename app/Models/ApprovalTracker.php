@@ -16,6 +16,11 @@ class ApprovalTracker extends Model
         return $this->belongsTo(LaporanPengaduan::class);
     }
 
+    public function konsultasi()
+    {
+        return $this->belongsTo(Konsultasi::class, 'laporan_pengaduan_id');
+    }
+
     public function statusAproval()
     {
         return $this->belongsTo(StatusAproval::class, 'status_aproval_id');
