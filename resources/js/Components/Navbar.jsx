@@ -269,11 +269,11 @@ export default function Navbar({ user }) {
                                                 >
                                                     Profile
                                                 </Dropdown.Link>
-                                                <Dropdown.Link
+                                                {/* <Dropdown.Link
                                                     href={route("Visualisasi")}
                                                 >
                                                     Visualisasi
-                                                </Dropdown.Link>
+                                                </Dropdown.Link> */}
                                                 <Dropdown.Link
                                                     href={route("logout")}
                                                     method="post"

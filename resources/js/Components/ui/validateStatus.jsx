@@ -32,3 +32,17 @@ export const validateStatus = (status) => {
             );
     }
 };
+export const validateStatusString = (status) => {
+    switch (status) {
+        case 1:
+            return "Pending";
+        case 2:
+            return "Aproved";
+        case 3:
+            return "On Progress";
+        case 4:
+            return "Success";
+        case 5:
+            return "Rejected";
+    }
+};

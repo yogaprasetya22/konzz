@@ -17,11 +17,17 @@ import { useState } from "react";
 import { useEffect } from "react";
 import KasusKategoriChart from "@/Components/ChartUi/KasusKategoriChart";
 import ProdiChart from "@/Components/ChartUi/ProdiChart";
-import { validateStatus } from "@/Components/ui/validateStatus";
+import {
+    validateStatus,
+    validateStatusString,
+} from "@/Components/ui/validateStatus";
 import { Link } from "@inertiajs/react";
 import ReactPaginate from "react-paginate";
 import moment from "moment/moment";
 import "moment/locale/id";
+import LayoutUi from "@/Layouts/LayoutUi";
+import KasusKategoriLine from "@/Components/ChartUi/KasusKategoriLine";
+import ProdiLine from "@/Components/ChartUi/ProdiLine";
 moment.locale("id");
 
 ChartJS.register(
@@ -41,6 +47,8 @@ ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 const Visualisasi = ({ title, auth, data, user, kategori_laporan }) => {
     const [dataTabel, setDataTabel] = useState([]);
     const [dataLaporan, setDataLaporan] = useState([]);
+    const [filterKasus, setFilterKasus] = useState(false);
+    const [filterProdi, setFilterProdi] = useState(false);
     useEffect(() => {
         // buatkan filter dataUser sama dengan role_id 2 dan status_id 1
         const res = user?.filter((users) => {
@@ -90,28 +98,17 @@ const Visualisasi = ({ title, auth, data, user, kategori_laporan }) => {
             return user === 5;
         }).length;
 
-    const filterFTD = user
-        ?.filter((user) => {
-            return user.role_id === 2;
-        })
-        .filter((user) => [5, 6, 7, 8, 9, 10].includes(user.mahasiswa.prodi.id))
-        .map((user) => {
-            return user;
-        });
-    const filterFHB = user
-        ?.filter((user) => {
-            return user.role_id === 2;
-        })
-        .filter((user) => [1, 2, 3, 4].includes(user.mahasiswa.prodi.id))
-        .map((user) => {
-            return user;
-        });
-
-    console.log(dataLaporan);
-
     return (
-        <Layout title={title} user={auth?.user}>
-            <div className="w-full flex flex-col gap-5 pb-[10rem]">
+        <LayoutUi title={title} user={auth?.user}>
+            <ModalKasus
+                filterKasus={filterKasus}
+                setFilterKasus={setFilterKasus}
+            />
+            <ModalProdi
+                filterProdi={filterProdi}
+                setFilterProdi={setFilterProdi}
+            />
+            <div className="w-full flex flex-col gap-5 pb-[10rem] px-10 pt-5">
                 <div className="w-full flex flex-col gap-2">
                     <h1>Laporan</h1>
                     <div className="w-full flex flex-row gap-5">
@@ -163,20 +160,51 @@ const Visualisasi = ({ title, auth, data, user, kategori_laporan }) => {
                 <div className="w-full flex flex-col gap-2">
                     <h1>Daftar Kasus</h1>
                     <div className="w-full flex flex-row gap-5">
-                        <div className="w-1/2 py-1 px-10 bg-white border-2 border-gray-200 h-[17rem]">
-                            <KasusKategoriChart
-                                data={dataLaporan}
-                                kategori_laporan={kategori_laporan}
-                            />
+                        <div className="flex flex-col w-1/2 bg-white border-2 border-gray-200">
+                            <div className={" w-full flex justify-end p-2"}>
+                                <button
+                                    className="bg-teal-400 rounded-md p-2 text-white"
+                                    onClick={() => window.my_modal_1.show()}
+                                >
+                                    <i className="fas fa-cog"></i> Custom
+                                </button>
+                            </div>
+                            <div className="w-full py-1 px-10  h-[17rem]">
+                                {filterKasus ? (
+                                    <KasusKategoriLine
+                                        data={dataLaporan}
+                                        kategori_laporan={kategori_laporan}
+                                    />
+                                ) : (
+                                    <KasusKategoriChart
+                                        data={dataLaporan}
+                                        kategori_laporan={kategori_laporan}
+                                    />
+                                )}
+                            </div>
                         </div>
-                        <div className="w-1/2 py-1 px-10 bg-white border-2 border-gray-200 h-[17rem]">
-                            <ProdiChart data={dataTabel} />
+                        <div className="flex flex-col w-1/2 bg-white border-2 border-gray-200">
+                            <div className={" w-full flex justify-end p-2"}>
+                                <button
+                                    className="bg-teal-400 rounded-md p-2 text-white"
+                                    onClick={() => window.my_modal_2.show()}
+                                >
+                                    <i className="fas fa-cog"></i> Custom
+                                </button>
+                            </div>
+                            <div className="w-full py-1 px-10  h-[17rem]">
+                                {filterProdi ? (
+                                    <ProdiLine data={dataTabel} />
+                                ) : (
+                                    <ProdiChart data={dataTabel} />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <TableRekap data={dataLaporan} />
             </div>
-        </Layout>
+        </LayoutUi>
     );
 };
 
@@ -217,37 +245,91 @@ const TableRekap = ({ data }) => {
 
         setItemOffset(newOffset);
     };
+
+    const handleFilter = (e) => {
+        e.preventDefault();
+        const filter = e.target[0].value;
+        if (filter === "") {
+            setCurrentItems(data);
+            return;
+        }
+        const filterData = data.filter((item) => {
+            // status
+            return (
+                item?.approval_tracker.laporan_pengaduan.deskripsi
+                    .toLowerCase()
+                    .includes(filter.toLowerCase()) ||
+                item?.approval_tracker.laporan_pengaduan.user.mahasiswa.prodi.name_prodi
+                    .toLowerCase()
+                    .includes(filter.toLowerCase()) ||
+                item?.approval_tracker.laporan_pengaduan.bukti
+                    .toLowerCase()
+                    .includes(filter.toLowerCase()) ||
+                item?.kategori_laporan.deskripsi
+                    .toLowerCase()
+                    .includes(filter.toLowerCase()) ||
+                validateStatusString(item?.approval_tracker.status_aproval?.id)
+                    .toLowerCase()
+                    .includes(filter.toLowerCase())
+            );
+        });
+        setCurrentItems(filterData);
+    };
+
     return (
         <div className="bg-white">
             <div className="flex justify-between items-center p-5">
                 <button
-                    className="bg-blue-800 text-white p-2 rounded-md"
+                    className="bg-blue-800 text-white p-2 rounded-md font-semibold"
                     onClick={() =>
                         window.open(window.location.origin + "/rekap", "_blank")
                     }
                 >
                     Rekap
                 </button>
-                <ReactPaginate
-                    className="flex flex-row gap-1 w-full justify-end items-center select-none pr-10"
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={2}
-                    marginPagesDisplayed={1}
-                    pageCount={pageCount}
-                    previousLabel="<"
-                    pageClassName=" text-sm border  p-2 rounded-md "
-                    pageLinkClassName=" rounded-md  px-2 py-2 font-semibold font-roboto"
-                    previousClassName=" p-2 rounded-md text-blue-800 hover:scale-125 hover:scale text-xl"
-                    previousLinkClassName="text-xl p-2  font-semibold font-roboto"
-                    nextClassName=" p-2 rounded-md text-blue-800 hover:scale-125 hover:scale text-xl"
-                    nextLinkClassName="text-xl p-2  font-semibold font-roboto "
-                    breakLabel="..."
-                    breakClassName=" p-2 rounded-md text-blue-800"
-                    breakLinkClassName="text-sm font-semibold font-roboto "
-                    containerClassName="pagination"
-                    activeClassName="bg-transparan border border-blue-800 text-blue-800"
-                />
+                {/* search */}
+                <form className="flex flex-row gap-5" onSubmit={handleFilter}>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="border-2 border-gray-200 p-2 rounded-md"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-blue-800 text-white p-2 rounded-md"
+                    >
+                        <i className="fas fa-search"></i>
+                    </button>
+                </form>
+
+                <div className="flex flex-row justify-between gap-5 items-center">
+                    <button
+                        className="bg-teal-400 rounded-md p-2 text-white font-semibold flex flex-row items-center gap-2"
+                        onClick={() => window.my_modal_3.show()}
+                    >
+                        <i className="fas fa-cog"></i> Filter
+                    </button>
+                    <ReactPaginate
+                        className="flex flex-row gap-1 w-full justify-end items-center select-none pr-10"
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={1}
+                        pageCount={pageCount}
+                        previousLabel="<"
+                        pageClassName=" text-sm border  p-2 rounded-md "
+                        pageLinkClassName=" rounded-md  px-2 py-2 font-semibold font-roboto"
+                        previousClassName=" p-2 rounded-md text-blue-800 hover:scale-125 hover:scale text-xl"
+                        previousLinkClassName="text-xl p-2  font-semibold font-roboto"
+                        nextClassName=" p-2 rounded-md text-blue-800 hover:scale-125 hover:scale text-xl"
+                        nextLinkClassName="text-xl p-2  font-semibold font-roboto "
+                        breakLabel="..."
+                        breakClassName=" p-2 rounded-md text-blue-800"
+                        breakLinkClassName="text-sm font-semibold font-roboto "
+                        containerClassName="pagination"
+                        activeClassName="bg-transparan border border-blue-800 text-blue-800"
+                    />
+                </div>
             </div>
             <div className="overflow-x-auto">
                 <table className="table border rounded-md">
@@ -333,3 +415,59 @@ const TableRekap = ({ data }) => {
         </div>
     );
 };
+
+const ModalKasus = ({ filterKasus, setFilterKasus }) => (
+    <dialog id="my_modal_1" className="modal backdrop-brightness-75">
+        <div className="modal-box relative overflow ">
+            <div className=" absolute top-0 right-0">
+                <button
+                    onClick={() => window.my_modal_1.close()}
+                    className="p-5 text-xl font-extrabold absolute top-0 right-10 text-white bg-red-500 hover:bg-red-600 transition-all"
+                    aria-label="close modal"
+                >
+                    x
+                </button>
+            </div>
+            <div className="w-full">
+                <h1 className="text-2xl font-bold">Filter Kasus</h1>
+                <div className="flex flex-col gap-2 pt-[4rem]">
+                    <button
+                        onClick={() => setFilterKasus(!filterKasus)}
+                        className="bg-blue-800 text-white p-2 rounded-md"
+                    >
+                        <i className="fas fa-filter"></i>{" "}
+                        {filterKasus ? "Pie" : "Line"}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+);
+
+const ModalProdi = ({ filterProdi, setFilterProdi }) => (
+    <dialog id="my_modal_2" className="modal backdrop-brightness-75">
+        <div className="modal-box relative overflow ">
+            <div className=" absolute top-0 right-0">
+                <button
+                    onClick={() => window.my_modal_2.close()}
+                    className="p-5 text-xl font-extrabold absolute top-0 right-10 text-white bg-red-500 hover:bg-red-600 transition-all"
+                    aria-label="close modal"
+                >
+                    x
+                </button>
+            </div>
+            <div className="w-full">
+                <h1 className="text-2xl font-bold">Filter Prodi</h1>
+                <div className="flex flex-col gap-2 pt-[4rem]">
+                    <button
+                        onClick={() => setFilterProdi(!filterProdi)}
+                        className="bg-blue-800 text-white p-2 rounded-md"
+                    >
+                        <i className="fas fa-filter"></i>{" "}
+                        {filterProdi ? "Pie" : "Line"}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+);

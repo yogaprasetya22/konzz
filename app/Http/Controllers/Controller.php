@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KategoriLaporan;
 use App\Models\LaporanPengaduan;
+use App\Models\RelasiLaporanKategori;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -17,8 +20,17 @@ class Controller extends BaseController
 
     public function Index()
     {
-        return Inertia::render('Home/Index', [
-            'title' => 'Home',
+        $id = auth()->user()->id;
+        $laporanPengaduan = RelasiLaporanKategori::with(['kategori_laporan', 'approvalTracker.laporanPengaduan.user.mahasiswa.prodi', 'approvalTracker.laporanPengaduan.user.role', 'approvalTracker.statusAproval'])->whereHas('approvalTracker.laporanPengaduan', function ($query) use ($id) {
+            $query->where('user_id', $id);
+        })->latest()->get();
+        $user = User::with(['role', 'mahasiswa.prodi'])->latest()->get();
+        $kategori_laporan = KategoriLaporan::all();
+        return Inertia::render('Home/Visualisasi', [
+            'title' => 'Visualisasi',
+            'user' => $user,
+            'data' => $laporanPengaduan,
+            'kategori_laporan' => $kategori_laporan,
         ]);
     }
     public function About()

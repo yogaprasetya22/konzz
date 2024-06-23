@@ -8,15 +8,11 @@ import {
     Title,
     Tooltip,
     Legend,
-    RadialLinearScale,
-    ArcElement,
 } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(
     CategoryScale,
-    RadialLinearScale,
-    ArcElement,
     LinearScale,
     PointElement,
     LineElement,
@@ -25,9 +21,7 @@ ChartJS.register(
     Legend
 );
 
-ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
-
-export default function KasusKategoriChart({ data, kategori_laporan }) {
+export default function KasusKategoriLine({ data, kategori_laporan }) {
     const warna = (() => {
         const rgbaColors = [
             "rgba(128, 128, 128, 1)", // gray
@@ -49,7 +43,7 @@ export default function KasusKategoriChart({ data, kategori_laporan }) {
         ];
         const colors = [];
         for (let i = 0; i < (kategori_laporan || []).length; i++) {
-            colors.push(rgbaColors[i]);
+            colors.push(rgbaColors[i % rgbaColors.length]);
         }
         return colors;
     })();
@@ -63,6 +57,7 @@ export default function KasusKategoriChart({ data, kategori_laporan }) {
         }
         return labels;
     })();
+
     const dataChart = {
         labels: labelsCharacter,
         datasets: [
@@ -78,6 +73,7 @@ export default function KasusKategoriChart({ data, kategori_laporan }) {
                 backgroundColor: warna,
                 borderColor: warna,
                 borderWidth: 1,
+                fill: false,
             },
         ],
     };
@@ -87,11 +83,26 @@ export default function KasusKategoriChart({ data, kategori_laporan }) {
         responsive: true,
         plugins: {
             legend: {
-                display: true,
-                position: "right", // Atur posisi legenda di samping kanan
+                display: false,
+                position: "right",
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Kategori",
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Jumlah",
+                },
+                beginAtZero: true,
             },
         },
     };
 
-    return <Pie data={dataChart} options={option} />;
+    return <Line data={dataChart} options={option} />;
 }
